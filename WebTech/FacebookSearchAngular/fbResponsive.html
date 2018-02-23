@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="fbSearch">
+<head>
+    <title>Facebook Search</title>
+    <meta charset="UTF-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <link rel="stylesheet" href="styleSet.css">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.3/angular.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.3/angular-animate.min.js"></script>
+    <script src="application.js" type="text/javascript"></script>
+    <script>
+        //Init Facebook SDK
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId      : '1821503231447458',
+                xfbml      : true,
+                version    : 'v2.8'
+            });
+        };
+        (function(d, s, id){
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {return;}
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+    <script>
+
+    </script>
+</head>
+
+<body>
+<div class="container-fluid" ng-controller="myCtrl">
+    <div class="row fixed" style="background-color: rgba(0,0,0,0.1);">
+
+        <div class=""navbar navbar-default>
+            <div class=" col-md-4  col-xs-12 navbar-header">
+                <a href="#" class="navbar-brand">
+                    FB Search
+                </a>
+            </div>
+            <div class="col-md-8 col-xs-12">
+                <form class="form-inline">
+                    <div style=" width:80% ;margin-top: 8px " class="input-group">
+                        <input  id ="searchText" ng-model="search" type="text" class="form-control" data-toggle = "tooltip" data-placement = "bottom" title="Please type a keyword" placeholder="type something...">
+                        <span class="input-group-btn ">
+                 <button id="searchButton" type="submit" class="btn btn-primary" style="width: 70px;" ng-click = "submit()">
+                     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                 </button>
+
+                       <button id="clearButton"  class="btn btn-default" type="button" ng-click="clear()">Clear</button>
+                </span>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <nav class="navbar navbar-justified">
+        <div id = "navmenu">
+            <ul class = "nav nav-pills nav-justified">
+                <li ng-class = "{active:isSet(1)}"><a href="" ng-click = "clickSetTab(1)">Users</a></li>
+                <li ng-class = "{active:isSet(2)}"><a href="" ng-click = "clickSetTab(2)">Pages</a></li>
+                <li ng-class =  "{active:isSet(3)}"><a href="" ng-click = "clickSetTab(3)">Events</a></li>
+                <li ng-class =   "{active:isSet(4)}"><a href="" ng-click = "clickSetTab(4)">Places</a></li>
+                <li ng-class =  "{active:isSet(5)}"><a href="" ng-click = "clickSetTab(5)">Groups</a></li>
+                <li ng-class =  "{active:isSet(6)}"><a href="" ng-click = "clickSetTab(6)">Favorites</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="progress" id="progressbarTable" ng-if = "activeProgressbar" style="margin-top: 200px">
+        <div class="progress-bar progress-bar-striped active" role="progressbar"
+             aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:65%">
+        </div>
+    </div>
+    <div class = "alert alert-warning" ng-if = "noShow">
+        No data found.
+    </div>
+
+
+    <div id = "tableArea" class=" slideTable table-responsive" ng-if = " tableShow && items && !noShow" >
+        <table class=" table table-hover ">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Profile photo</th>
+                <th>Name</th>
+                <th ng-if = "id==6">Type</th>
+                <th>Favorite</th>
+                <th>Details</th>
+            </tr>
+            </thead>
+            <tbody  >
+            <tr ng-repeat = "item in items">
+                <td >{{$index + 1}}</td>
+                <td ng-if ="id!=6"><a ng-href = {{item.picture.data.url}} target = "_blank"><img ng-src = {{item.picture.data.url}} class = "profileImage"></a></td>
+                <td ng-if = "id==6"><a ng-href = {{item.url}} target = "_blank"><img ng-src = {{item.url}} class = "profileImage"></a></td>
+                <td>{{item.name}}</td>
+                <td ng-if = "id==6">{{item.type + "s"}}</td>
+                <td  ng-if="id!=6 && !item.isFav"><button type = "button" class = "btn btn-default" ng-click = "addFav(item)"><span class = "glyphicon glyphicon-star-empty"></span></button></td>
+                <td ng-if = "id != 6 && item.isFav"><button type = "button" class = "btn btn-default" ng-click = "deleteFav(item)"><span class = "glyphicon glyphicon-star icon-success"></span></button></td>
+                <td ng-if = "id == 6"><button type = "button" class = "btn btn-default" ng-click = "deleteFav(item)"><span class = "glyphicon glyphicon-trash"></span></button></td>
+                <td ><button type = "button" class = "btn btn-default" ng-click = "showDetail(item)"><span class = "glyphicon glyphicon-menu-right"></span></button></td>
+
+            </tr>
+            </tbody>
+        </table>
+        <div class="container" ng-if="!favTab">
+            <button ng-if = "pagination.hasPrev" id="prevB"  ng-click = "previousPage()" class="btn btn-default" type="button">Previous</button>
+            <button ng-if = "pagination.hasNext" id ="nextB" ng-click = "nextPage()" class="btn btn-default" type="button" >Next</button>
+        </div>
+    </div>
+    <div id=" detailArea" class="slideDetail" style="margin-left:2% ;margin-right: 2%" ng-if = "tableDetail" >
+        <div id="buttonArea">
+            <button type = "button" class = "btn btn-default " ng-click = "backButton()"><span class = "glyphicon glyphicon-menu-left"></span>Back</button>
+            <button type = "button" class = "btn btn-default pull-right" ng-click = "fbClick(showData)" ><img src = "http://cs-server.usc.edu:45678/hw/hw8/images/facebook.png" style = "width: 20px; height: 20px;"></button>
+            <button id="favouriteB" ng-if = "!showData.passData.isFav" type = "button" class = "btn btn-default pull-right" ng-click = "addFav(showData.passData)"><span class = "glyphicon glyphicon-star-empty"></span></button>
+            <button id="favouriteC" ng-if = "showData.passData.isFav" type = "button" class = "btn btn-default pull-right" ng-click = "deleteFav(showData.passData)"><span class = "glyphicon glyphicon-star icon-success"></span></button>
+        </div>
+
+        <div id ="panelArea" class="row">
+            <div id="AlbumPanel" class="panel panel-default col-md-5 col-xs-12">
+                <div class="panel-heading">Albums</div>
+                <div class = "panel-body">
+                    <div class="progress"  ng-if = "albumProgressbar">
+                        <div class = "progress-bar progress-bar-striped active" role="progressbar"
+                             aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 45%"></div>
+                    </div>
+                    <div ng-if="!albumProgressbar">
+                        <div class = "alert alert-warning"  ng-if="!showData.hasAlbum">
+                            No data found.
+                        </div>
+                    </div>
+
+                    <div class="panel-group" id = "showOneAtTime" ng-if = "!albumProgressbar">
+                        <div class = "panel panel-default" ng-repeat = "album in showData.albums">
+                            <div class = "panel-heading">
+                                <a class="albumName" data-parent="#showOneAtTime" data-toggle="collapse" href = "#{{album.id}}">{{album.name}}</a>
+                            </div>
+                            <div id = "{{album.id}}" class = "panel-collapse collapse" ng-class = "{'in' : $index == 0}">
+                                <div class = "panel-body">
+                                    <div  ng-repeat = "photo in album.photos.data">
+                                        <img class = "img-responsive img-rounded imageStyle" ng-src = {{photo.url}}>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div> <!--album panel end here-->
+
+            <div id = "postPanel" class="panel panel-default col-md-offset-2 col-md-5 col-xs-12 ">
+                <div class="panel-heading">Posts</div>
+
+                <div class = "panel-body">
+                    <div class="progress"  ng-if = "postProgressbar" >
+                        <div class = "progress-bar progress-bar-striped active" role="progressbar"
+                             aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 45%"></div>
+                    </div>
+                    <div ng-if="!postProgressbar">
+                        <div class = "alert alert-warning"  ng-if="!showData.hasPost">
+                            No data found.
+                        </div>
+                    </div>
+                    <div class = "panel-group"  ng-if = "!albumProgressbar" >
+                        <div class = "panel panel-default" ng-repeat = "post in showData.posts">
+                            <div class = "panel-body">
+                                <div class = "media">
+                                    <div class = "media-left media-top">
+                                        <img ng-src = {{showData.passData.picture.data.url}} class = "media-object postImage" >
+                                    </div>
+                                    <div class="media-body">
+                                        <h4 class="media-heading">{{showData.passData.name}}</h4>
+                                        <p>{{post.created_time | date:'yyyy-MM-dd HH:mm:ss'}}</p>
+                                    </div>
+                                </div>
+                                <div >
+                                    <p>{{post.message}}</p>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

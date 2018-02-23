@@ -1,0 +1,140 @@
+
+#navmenu
+{
+    border-bottom: 1px solid darkblue;
+}
+.profileImage{
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+}
+#favouriteB
+{
+    margin-right: 25px;
+}
+#favouriteC
+{
+    margin-right: 25px;
+}
+#prevB {
+    width: 100px;
+    text-align: center;
+    border-radius: 5px;
+}
+#nextB{
+    width:100px;
+    margin-left:20px;
+    border-radius: 5px;}
+div.container{
+    text-align: center;
+    padding-bottom: 10px;
+}
+#nextB .btn-default:focus , .btn-default:active ,.btn-default:hover {
+
+
+}
+#panelArea
+{
+    margin-top: 30px;
+}
+
+.row #AlbumPanel{
+    padding-left: 0;
+    padding-right: 0;
+}
+.row #postPanel{
+    padding-left: 0;
+    padding-right: 0;
+}
+
+#progressbarTable
+{
+    position:relative;
+    margin-top: 100%;
+
+    width:50%;
+    margin:auto;
+}
+a.albumName:active, a.albumName:hover{
+    color: #004499;
+}
+.albumName{
+    color:black;
+}
+a.albumLink:active{
+    color: #004499;
+}
+a.albumLink:hover {
+    color: #004499;
+}.well{
+    background:rgb(55,55,55);
+}
+.icon-success {
+    color: #FFCC00;
+}
+#clearButton{
+   margin-left: 15px;
+    color: darkblue;
+    border-radius: 0 !important;
+    border-color:darkblue;
+
+}
+
+.imageStyle{
+
+    margin-bottom: 20px;
+}
+#searchButton {
+    min-width: 40px;
+}
+.form-control{
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+    line-height: 1.25;
+}
+.nav-pills>li.active>a:active{
+    border-radius: 0;
+}
+.nav-pills>li.active>a:hover{
+    border-radius: 0;
+    background-color:#004499;
+}
+.nav-pills>li.active>a:focus{
+    border-radius: 0;
+    background-color:#004499;
+}
+.nav-pills>li.active>a{
+    border-radius: 0;
+    background-color:#004499;
+}
+.nav-pills a{
+    color:#004499;
+}
+.nav>li>a:focus {
+       background-color: transparent;
+   }
+.nav>li>a:hover {
+    background-color: transparent;
+}
+.slideTable.ng-enter{
+    position: relative;
+    transition: 300ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    left: 100%;
+
+}
+.slideTable.ng-enter.slideTable.ng-enter-active {
+    left: 0;
+}
+.slideDetail.ng-enter{
+    transition: 300ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+   right:100%;
+    position: relative;
+
+}
+.slideDetail.ng-enter.slideDetail.ng-enter-active {
+    right:0;
+}
+.postImage{
+    width: 45px;
+}

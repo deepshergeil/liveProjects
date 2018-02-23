@@ -1,0 +1,21 @@
+To run the code, please follow the below command.
+
+To run on twitter_test.ner
+
+python main.py -e data/twitter_test.ner
+
+run the evaluation using the following command on twitter_test.ner.pred
+
+data/conlleval.pl -d \\t < twitter_test.ner.pred
+
+#####################################################
+
+To run on twitter_dev_test.ner
+
+python main.py -e data/twitter_dev_test.ner
+
+run the evaluation using the following command on twitter_test.ner.pred
+
+data/conlleval.pl -d \\t < twitter_dev_test.ner.pred
+
+

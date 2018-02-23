@@ -1,0 +1,39 @@
+Name: Deepak
+USC ID: 5026958753
+NewsSite crawled: BostonGlobe
+
+Fetch Statistics
+=====================
+fetches attempted: 19969
+fetched succeeded: 19279
+fetched aborted or failed: 690
+
+Outgoing URLs
+=====================
+Total URLS extracted: 579195
+# unique URLs extracted: 112873
+# unique URLs within News Site: 46070
+# unique URLs outside News Site: 66803
+
+Status Codes
+=====================
+404 Not Found: 631
+200 OK: 19279
+301 Moved Permanently: 43
+302 Found: 16
+
+File Size
+=====================
+< 1KB: 4
+1KB ~ <10KB: 1384
+10KB ~ <100KB: 17179
+100KB ~ <1MB: 704
+>= 1MB: 8
+
+Content Types
+=====================
+image/png: 34
+text/html: 16159
+image/jpeg: 3058
+image/gif: 5
+

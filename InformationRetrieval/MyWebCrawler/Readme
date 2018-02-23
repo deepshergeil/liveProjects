@@ -1,0 +1,26 @@
+Exercise 2 (Web Crawler)
++++++++++++++++++++++++++++
+
+1)I have written a web Crawler to measure :
+
+   a)Aspects of a crawl.
+   b)Studied characteristics of a crawl.
+   c)Download webpages from the crawl.
+   d)Gather webpage metadata.
+   
+--I have configured and compiled the crawler and crawled a news WSebsite: "https://www.bostonglobe.com/".
+
+                I have limited my crawler to fetch max pages upto 20,000 & a max depth set to 16.
+                Crawler visits HTML,doc,pdf and different image format URLs and recorded the metada for thode file types.
+
+--In the "ReportsGenerated" folder,I have generated report/statistics for my crawler about :
+              -	the URLs it attempts to fetch,
+              -	the files it successfully downloads,
+              -	all of the URLs (including repeats) that were discovered and processed in some way.
+			  
+			  ● Fetch statistics:
+			  ● Outgoing URLs
+			  ● Status codes
+			  ● File sizes
+			  ● Content Type
+			  
